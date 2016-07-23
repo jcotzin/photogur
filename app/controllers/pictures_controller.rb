@@ -1,7 +1,7 @@
 class PicturesController < ApplicationController
   before_action :set_picture, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
-
+  before_action :authenticate_user!, except: [:index, :show]
+  #this is from devise and requires a user to sign in before creating a picture
 
   # GET /pictures
   # GET /pictures.json
@@ -16,7 +16,7 @@ class PicturesController < ApplicationController
 
   # GET /pictures/new
   def new
-    @picture = Picture.new
+    @picture = current_user.pictures.build
   end
 
   # GET /pictures/1/edit
@@ -26,7 +26,8 @@ class PicturesController < ApplicationController
   # POST /pictures
   # POST /pictures.json
   def create
-    @picture = Picture.new(picture_params)
+    #so when a new picture is created, it will be assigned to current user (this is a devise helper)
+     @picture = current_user.pictures.build(picture_params)
 
     respond_to do |format|
       if @picture.save

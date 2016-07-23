@@ -1,5 +1,5 @@
-<%= form_for(picture) do |f| %>
-  <% if picture.errors.any? %>
+<%= form_for Picture.new  do |f| %>
+  <% if Picture.new.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(picture.errors.count, "error") %> prohibited this picture from being saved:</h2>
 
